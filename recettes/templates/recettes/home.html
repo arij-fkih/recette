@@ -1,0 +1,63 @@
+{% extends 'recettes/base.html' %}
+{% load static %}
+{% block title %}Accueil — RecipeBox{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="text-center py-5 mb-4 rounded-3 text-white" style="background-color: #1a1a1a;">
+    <img src="{% static 'recettes/logo.png' %}" alt="RecipeBox" style="height: 120px;" class="mb-3">
+    <p class="lead text-white-50 mb-4">Gérez, découvrez et partagez vos recettes préférées</p>
+    <a href="{% url 'liste_recettes' %}" class="btn btn-danger btn-lg me-2">
+        <i class="bi bi-search"></i> Voir les recettes
+    </a>
+    <a href="{% url 'ajouter_recette' %}" class="btn btn-outline-light btn-lg">
+        <i class="bi bi-plus-circle"></i> Ajouter une recette
+    </a>
+</div>
+
+<!-- Statistiques -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card text-center border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h2 class="display-4 fw-bold" style="color:#c0392b;">{{ total_recettes }}</h2>
+                <p class="text-muted mb-0"><i class="bi bi-journal-richtext"></i> Recettes enregistrées</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-center border-0 shadow-sm">
+            <div class="card-body py-4">
+                <h2 class="display-4 fw-bold text-warning">{{ total_categories }}</h2>
+                <p class="text-muted mb-0"><i class="bi bi-tags"></i> Catégories disponibles</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recettes récentes -->
+{% if recettes_recentes %}
+<h3 class="mb-3 fw-semibold">Ajouts récents</h3>
+<div class="row g-4">
+    {% for r in recettes_recentes %}
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            {% if r.image %}
+                <img src="{{ r.image.url }}" class="card-img-top recette-img" alt="{{ r.nom }}">
+            {% else %}
+                <div class="card-img-top recette-img d-flex align-items-center justify-content-center"
+                     style="background-color:#1a1a1a;">
+                    <img src="{% static 'recettes/logo.png' %}" style="height:70px; opacity:0.4;" alt="">
+                </div>
+            {% endif %}
+            <div class="card-body">
+                <span class="badge mb-2" style="background-color:#c0392b;">{{ r.categorie.nom }}</span>
+                <h5 class="card-title">{{ r.nom }}</h5>
+                <p class="text-muted small"><i class="bi bi-clock"></i> {{ r.duree_preparation }} min</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

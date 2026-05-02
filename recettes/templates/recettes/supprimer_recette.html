@@ -1,0 +1,28 @@
+{% extends 'recettes/base.html' %}
+{% block title %}Supprimer la recette — RecipeBox{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Confirmer la suppression</h4>
+            </div>
+            <div class="card-body p-4 text-center">
+                <i class="bi bi-trash text-danger" style="font-size:3rem"></i>
+                <p class="mt-3 fs-5">Voulez-vous vraiment supprimer la recette</p>
+                <p class="fw-bold fs-4 text-danger">"{{ recette.nom }}"</p>
+                <form method="POST" class="d-flex gap-2 justify-content-center mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger px-4">
+                        <i class="bi bi-trash"></i> Oui, supprimer
+                    </button>
+                    <a href="{% url 'liste_recettes' %}" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-x-circle"></i> Annuler
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

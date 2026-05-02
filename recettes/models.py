@@ -22,6 +22,8 @@ class Recette(models.Model):
         on_delete=models.CASCADE,
         related_name="recettes"
     )
+    # ✅ NOUVEAU : champ image (+1pt)
+    image = models.ImageField(upload_to='recettes/', blank=True, null=True)
 
     def __str__(self):
         return self.nom

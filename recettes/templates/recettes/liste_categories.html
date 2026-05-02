@@ -1,0 +1,51 @@
+{% extends 'recettes/base.html' %}
+{% load static %}
+{% block title %}Catégories — RecipeBox{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-tags text-danger"></i> Catégories</h2>
+    <div class="d-flex gap-2">
+        <a href="{% url 'ajouter_categorie' %}" class="btn btn-danger">
+            <i class="bi bi-plus-circle"></i> Ajouter
+        </a>
+        <a href="{% url 'liste_recettes' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+    </div>
+</div>
+
+<div class="row g-3">
+{% for c in categories %}
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center justify-content-between">
+                <div>
+                    <i class="bi bi-tag-fill text-danger me-2"></i>
+                    <span class="fw-semibold">{{ c.nom }}</span>
+                    <div class="text-muted small mt-1">
+                        {{ c.recettes.count }} recette{{ c.recettes.count|pluralize }}
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'modifier_categorie' c.id %}" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'supprimer_categorie' c.id %}" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <div class="col-12 text-center py-5">
+        <i class="bi bi-tags text-muted" style="font-size:3rem"></i>
+        <p class="text-muted mt-2">Aucune catégorie disponible.</p>
+        <a href="{% url 'ajouter_categorie' %}" class="btn btn-danger mt-2">
+            <i class="bi bi-plus-circle"></i> Créer la première catégorie
+        </a>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
